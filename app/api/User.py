@@ -1,4 +1,5 @@
 import json
+from pprint import pprint
 
 import requests
 
@@ -44,3 +45,9 @@ class Users(API):
         if id is not None:
             response = requests.get(self.api_url + f"/{id}?populate=*", headers=self.headers).json()
             return UserDto.model_validate(response)
+
+    def get_executors(self) -> list[UserDto]:
+        response = requests.get(self.api_url + f"?filters[role][type][$eq]=executor&populate=*",
+                                headers=self.headers).json()
+        pprint(response)
+        return [UserDto.model_validate(user) for user in response]
