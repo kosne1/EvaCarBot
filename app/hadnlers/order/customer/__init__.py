@@ -120,7 +120,9 @@ def change_order_status(call: CallbackQuery):
     bot.send_contact(chat_id=customer.telegram_id, phone_number=executor.phone_number,
                      first_name=executor.full_name)
 
-    bot.send_message(chat_id=call.message.chat.id, text='Подтвердите завершение заказа',
+    bot.send_message(chat_id=call.message.chat.id, text='Подтвердите завершение заказа.\n'
+                                                        'Вы можете начать поиск другого исполнителя, '
+                                                        'если возникли проблемы с утвержденным',
                      reply_markup=gen_end_order_keyboard(order_id=order_id))
 
 
@@ -130,3 +132,14 @@ def end_order_handler(call: CallbackQuery):
     Orders().update(order_id=order_id, status="completed")
     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                           text='Заказ завершен!')
+
+
+@bot.callback_query_handler(func=lambda call: str(call.data).find('search_new_executor_for_') == 0)
+def search_new_executor_for_order_handler(call: CallbackQuery):
+    new_message = send_wait_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+    order_id = int(str(call.data).split('search_new_executor_for_order_')[1])
+    order = Orders().get(order_id=order_id)
+    Orders().update(order_id=order_id, status="waiting for executor", executor=-1)
+    bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,
+                          text='Заказ отправлен, ожидайте исполнителя!')
+    auto_sending_order(order=order)
