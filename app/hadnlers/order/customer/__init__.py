@@ -1,9 +1,9 @@
-from telebot.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import CallbackQuery, Message
 
 from app import bot
 from app.api.Order import Orders
 from app.api.User import Users
-from app.helpers import send_wait_message
+from app.helpers import send_wait_message, auto_sending_order
 from app.keyboards.end_order import gen_end_order_keyboard
 from app.keyboards.send_order import send_order_keyboard
 from app.keyboards.send_order.text import send_order_button_info, cancel_order_button_info
@@ -89,6 +89,7 @@ def set_order_state(call: CallbackQuery):
                                                              order_id=order.id)
         bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,
                               text='Заказ отправлен, ожидайте исполнителя!')
+        auto_sending_order(order=order)
     else:
         order_storage_service.cancel_order(chat_id=call.message.chat.id, user_id=call.from_user.id)
         bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,

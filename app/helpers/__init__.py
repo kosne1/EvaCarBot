@@ -6,7 +6,9 @@ from geopy.distance import distance
 from telebot.types import Message, Location
 
 from app import bot
+from app.api.User import Users
 from app.configs import rub_per_km, order_start_price
+from app.keyboards.start import executor_start_keyboard
 from app.schemas.OrderSchema import OrderDto
 
 
@@ -62,3 +64,12 @@ def convert_datetime(datetime_str):
     datetime_str = datetime_obj.strftime('%H:%M %d.%m.%Y')
 
     return datetime_str
+
+
+def auto_sending_order(order: OrderDto) -> None:
+    text = gen_order_text(order)
+    text = 'Новый заказ!\n\n' + text + "\n\n" + "Успейте найти его в ленте, пока на него никто не откликнулся!"
+    executors = Users().get_executors()
+    for executor in executors:
+        bot.send_message(chat_id=executor.telegram_id, text=text,
+                         reply_markup=executor_start_keyboard)
