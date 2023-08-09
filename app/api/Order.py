@@ -34,12 +34,12 @@ class Orders(API):
         data = {}
         if executor is not None and status is not None:
             data = {
-                "executor": executor,
+                "executor": None if executor == -1 else executor,
                 "status": status
             }
         elif executor is not None:
             data = {
-                "executor": executor,
+                "executor": None if executor == -1 else executor,
             }
         elif status is not None:
             data = {
