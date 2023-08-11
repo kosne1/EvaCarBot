@@ -1,7 +1,10 @@
-from telebot.types import InlineKeyboardMarkup
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from app.keyboards.accept_order.button import accept_order_button, next_order_button
-from app.keyboards.start import search_order_button
+from app.keyboards.accept_order.button import accept_order_button
 
-accept_order_keyboard = InlineKeyboardMarkup()
-accept_order_keyboard.row(accept_order_button, search_order_button)
+
+def gen_accept_order_keyboard(order_id: int) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup()
+    button = InlineKeyboardButton(text="Принять заказ", callback_data=f"accept_order_{order_id}")
+    keyboard.add(button)
+    return keyboard

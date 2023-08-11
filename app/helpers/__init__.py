@@ -8,7 +8,7 @@ from telebot.types import Message, Location
 from app import bot
 from app.api.User import Users
 from app.configs import rub_per_km, order_start_price
-from app.keyboards.start import executor_start_keyboard
+from app.keyboards.accept_order import gen_accept_order_keyboard
 from app.schemas.OrderSchema import OrderDto
 
 
@@ -72,4 +72,4 @@ def auto_sending_order(order: OrderDto) -> None:
     executors = Users().get_executors()
     for executor in executors:
         bot.send_message(chat_id=executor.telegram_id, text=text,
-                         reply_markup=executor_start_keyboard)
+                         reply_markup=gen_accept_order_keyboard(order_id=order.id))

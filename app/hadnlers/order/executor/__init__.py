@@ -4,7 +4,7 @@ from app import bot
 from app.api.Order import Orders
 from app.api.User import Users
 from app.helpers import send_wait_message, gen_order_text, convert_datetime
-from app.keyboards.accept_order import accept_order_keyboard
+from app.keyboards.accept_order import gen_accept_order_keyboard
 from app.keyboards.accept_order.text import accept_order_button_info
 from app.keyboards.change_order_status import gen_change_order_status_keyboard
 from app.keyboards.start.text import search_order_button_info
@@ -37,18 +37,18 @@ def search_order(call: CallbackQuery):
                                                             order_id=order.id)
     bot.send_message(chat_id=call.message.chat.id,
                      text=gen_order_text(order) + "\n\n" +
-                          "Принять заказ?", reply_markup=accept_order_keyboard)
+                          "Принять заказ?", reply_markup=gen_accept_order_keyboard(order_id=order.id))
 
 
-@bot.callback_query_handler(func=lambda
-        call: accept_order_button_info.filter(call.data) and
-              order_storage_service.is_checking_order(chat_id=call.message.chat.id,
-                                                      user_id=call.from_user.id))
+@bot.callback_query_handler(func=lambda call: str(call.data).find("accept_order_") == 0)
 def accept_order(call: CallbackQuery):
     new_message = send_wait_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
-    order_id = order_storage_service.get_current_checking_order_id(chat_id=call.message.chat.id,
-                                                                   user_id=call.from_user.id)
+    order_id = int(str(call.data).split("accept_order_")[1])
     order = Orders().get(order_id=order_id)
+    if order.attributes.status != "waiting for executor":
+        bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,
+                              text=f'Заказ уже принят другим исполнителем')
+        return
     customer_telegram_id = order.attributes.customer.data[0].attributes.telegram_id
     executor = Users().get(telegram_id=call.from_user.id)
     datetime = order.attributes.datetime
