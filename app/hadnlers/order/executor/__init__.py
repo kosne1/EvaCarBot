@@ -56,7 +56,7 @@ def accept_order(call: CallbackQuery):
     bot.send_message(chat_id=customer_telegram_id,
                      text=f"{executor.full_name} откликнулся на ваш заказ "
                           f"от {convert_datetime(datetime)}!\n\n"
-                          f"После подтверждения заказами произойдет обмен контактами.\n"
+                          f"После подтверждения заказа произойдет обмен контактами.\n"
                           f"Подтвердить заказ?",
                      reply_markup=gen_change_order_status_keyboard(user_id=executor.id))
     bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,
