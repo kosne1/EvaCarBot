@@ -37,7 +37,7 @@ def search_order(call: CallbackQuery):
                                                             order_id=order.id)
     bot.send_message(chat_id=call.message.chat.id,
                      text=gen_order_text(order) + "\n\n" +
-                          "Откликнуться?", reply_markup=accept_order_keyboard)
+                          "Принять заказ?", reply_markup=accept_order_keyboard)
 
 
 @bot.callback_query_handler(func=lambda
