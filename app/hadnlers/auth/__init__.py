@@ -41,6 +41,7 @@ def register(call: CallbackQuery):
             def register_contact(message: Message):
                 log_file = open("info.log", "w")
                 log_file.write(f"[INFO {datetime.datetime.now()}]: {message.contact.phone_number}, {type(message.contact.phone_number)}")
+                log_file.close()
                 auth_storage_service.set_phone_number(chat_id=message.chat.id, user_id=message.from_user.id,
                                                       phone_number=message.contact.phone_number)
                 auth_storage_service.set_username(chat_id=message.chat.id, user_id=message.from_user.id,
