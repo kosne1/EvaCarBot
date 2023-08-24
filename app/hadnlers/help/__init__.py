@@ -19,7 +19,6 @@ def send_help_message_handler(message: Message):
     # preparing message text for manager
     text = 'Новое сообщение от пользователя:\n\n' + message.text
     text += '\n\n' + 'Информация о пользователе:\n\n' + \
-            f'<b>Имя пользователя</b>: @{user.username}\n' \
             f'<b>ФИО</b>: {user.full_name}\n' \
             f'<b>Роль</b>: {"исполнитель" if user.role.type == "executor" else "заказчик"}\n' \
             f'<b>Контакты</b>:'

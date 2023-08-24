@@ -110,13 +110,13 @@ def change_order_status(call: CallbackQuery):
     # Отправка контакта заказчика исполнителю
     bot.send_message(chat_id=executor.telegram_id,
                      text=f'Вас выбрали в качестве исполнителя!\n\n'
-                          f'Контакты заказчика{" @" + customer.username if customer.username else ""}: ')
+                          f'Контакты заказчика: ')
     bot.send_contact(chat_id=executor.telegram_id, phone_number=customer.phone_number,
                      first_name=customer.full_name)
     # Отправка контакта исполнителя заказчику
     bot.send_message(chat_id=customer.telegram_id,
                      text=f'Исполнитель утвержден!\n\n'
-                          f'Контакты исполнителя{" @" + executor.username if executor.username else ""}: ')
+                          f'Контакты исполнителя: ')
     bot.send_contact(chat_id=customer.telegram_id, phone_number=executor.phone_number,
                      first_name=executor.full_name)
 

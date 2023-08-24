@@ -18,10 +18,11 @@ class Users(API):
 
     def create(self, user: CreateUserDto) -> UserDto:
         confirmed: bool = False if user.role == "executor" else True
+        username = user.username if user.username else f"user_{user.telegram_id}"
         response = requests.post(self.api_url, headers=self.headers, data=json.dumps({
-            "username": user.username,
-            "email": f"{user.username}@strapi.io",
-            "password": f"{user.username}-password",
+            "username": username,
+            "email": f"{username}@strapi.io",
+            "password": f"{username}-password",
             "full_name": user.full_name,
             "telegram_id": user.telegram_id,
             "phone_number": user.phone_number,
