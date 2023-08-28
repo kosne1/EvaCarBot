@@ -33,14 +33,14 @@ class Users(API):
         if response.get('error', None) is not None:
             log_file = open("info.log", "a")
             log_file.write(
-                f"\n[ERROR {datetime.datetime.now()}]: {response},\n")
+                f"[ERROR {datetime.datetime.now()}]: {response},\n")
             log_file.close()
             if response.get('error').get('message') == 'Email already taken':
                 return self.get(telegram_id=user.telegram_id)
         else:
             log_file = open("info.log", "a")
             log_file.write(
-                f"\n[INFO {datetime.datetime.now()}]: new user created, strapi id: {UserDto.model_validate(response).id},\n")
+                f"[INFO {datetime.datetime.now()}]: new user created, strapi id: {UserDto.model_validate(response).id},\n")
             log_file.close()
             return UserDto.model_validate(response)
 
