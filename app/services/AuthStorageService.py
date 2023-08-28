@@ -30,8 +30,9 @@ class AuthStorageService:
 
     def get_create_user_dto(self, chat_id: int, telegram_id: int) -> CreateUserDto:
         data = self.__storage.get_data(chat_id=chat_id, user_id=telegram_id)
+        username = data.get('username') if data.get('username') else f"user_{telegram_id}"
         return CreateUserDto(telegram_id=telegram_id,
-                             username=data.get('username'),
+                             username=username,
                              full_name=data.get('full_name'),
                              phone_number=data.get('phone_number'),
                              role=data.get('role'))
