@@ -7,7 +7,7 @@ from telebot.types import Message, Location
 
 from app import bot
 from app.api.User import Users
-from app.configs import rub_per_km, order_start_price
+from app.configs import env
 from app.keyboards.accept_order import gen_accept_order_keyboard
 from app.schemas.OrderSchema import OrderDto
 
@@ -39,7 +39,7 @@ def get_price_by_coords(location_from: Location, location_to: Location) -> int:
         (location_from.latitude, location_from.longitude),
         (location_to.latitude, location_to.longitude)
     ).km
-    price = dist * math.pi / 2 * rub_per_km + order_start_price
+    price = dist * math.pi / 2 * env.RUB_PER_KM + env.ORDER_START_PRICE
     return int(round(price, -1))
 
 
