@@ -1,9 +1,9 @@
 from telebot.types import InlineKeyboardMarkup
 
-from app.keyboards.start.button import make_order_button, send_help_message_button
+from app.keyboards.start.button import order_tow_track_button, send_help_message_button
 
 customer_start_keyboard = InlineKeyboardMarkup()
-customer_start_keyboard.row(make_order_button)
+customer_start_keyboard.row(order_tow_track_button)
 customer_start_keyboard.row(send_help_message_button)
 
 executor_start_keyboard = InlineKeyboardMarkup()
