@@ -7,11 +7,11 @@ from app.helpers import send_wait_message, auto_sending_order
 from app.keyboards.end_order import gen_end_order_keyboard
 from app.keyboards.send_order import send_order_keyboard
 from app.keyboards.send_order.text import send_order_button_info, cancel_order_button_info
-from app.keyboards.start.text import make_order_button_info
+from app.keyboards.start.text import order_tow_track_button_info
 from app.services import order_storage_service
 
 
-@bot.callback_query_handler(func=lambda call: make_order_button_info.filter(call.data))
+@bot.callback_query_handler(func=lambda call: order_tow_track_button_info.filter(call.data))
 def make_order(call: CallbackQuery):
     order_storage_service.set_state_making_order(chat_id=call.message.chat.id, user_id=call.from_user.id)
     bot.answer_callback_query(call.id)
