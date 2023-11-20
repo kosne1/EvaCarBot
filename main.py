@@ -1,6 +1,6 @@
 from app import bot
-from app.hadnlers.commands import start_command
-import app.hadnlers
+from app.handlers.commands import start_command
+import app.handlers
 
 
 if __name__ == '__main__':
