@@ -3,7 +3,7 @@ from datetime import datetime
 from telebot import StateMemoryStorage
 
 from app.api.User import Users
-from app.helpers import get_str_address_by_coords, get_price_by_coords
+from app.helpers import get_str_address_by_coords, get_price_by_coords_and_order_type
 from app.schemas.OrderSchema import CreateOrderDto
 
 
@@ -39,7 +39,7 @@ class OrderStorageService:
             from_address=get_str_address_by_coords(data.get('from_address')),
             to_address=get_str_address_by_coords(data.get('to_address')),
             datetime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            price=get_price_by_coords(data.get('from_address'), data.get('to_address'))
+            price=get_price_by_coords_and_order_type(data.get('from_address'), data.get('to_address'))
         )
 
     def cancel_order(self, chat_id: int, user_id: int) -> bool:

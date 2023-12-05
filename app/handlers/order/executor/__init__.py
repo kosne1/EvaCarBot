@@ -5,13 +5,12 @@ from app.api.Order import Orders
 from app.api.User import Users
 from app.helpers import send_wait_message, gen_order_text, convert_datetime
 from app.keyboards.accept_order import gen_accept_order_keyboard
-from app.keyboards.accept_order.text import accept_order_button_info
 from app.keyboards.change_order_status import gen_change_order_status_keyboard
-from app.keyboards.start.text import search_order_button_info
+from app.keyboards.start.button import search_order_button
 from app.services import order_storage_service
 
 
-@bot.callback_query_handler(func=lambda call: search_order_button_info.filter(call.data))
+@bot.callback_query_handler(func=lambda call: search_order_button.callback_data == call.data)
 def search_order(call: CallbackQuery):
     send_wait_message(chat_id=call.message.chat.id, message_id=call.message.message_id,
                       text='🔍 Поиск подходящих заказов...')
@@ -45,7 +44,7 @@ def accept_order(call: CallbackQuery):
     new_message = send_wait_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     order_id = int(str(call.data).split("accept_order_")[1])
     order = Orders().get(order_id=order_id)
-    if order.attributes.status != "waiting for executor":
+    if order.attributes.status != "awaiting executor":
         bot.edit_message_text(chat_id=new_message.chat.id, message_id=new_message.message_id,
                               text=f'Заказ уже принят другим исполнителем')
         return

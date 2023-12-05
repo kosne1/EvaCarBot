@@ -3,11 +3,10 @@ from telebot.types import CallbackQuery, Message
 from app import bot, env
 from app.api.User import Users
 from app.helpers import send_wait_message
-from app.keyboards.start import executor_start_keyboard, customer_start_keyboard
-from app.keyboards.start.text import send_help_message_button_info
+from app.keyboards.start import executor_start_keyboard, customer_start_keyboard, send_help_message_button
 
 
-@bot.callback_query_handler(func=lambda call: send_help_message_button_info.filter(call.data))
+@bot.callback_query_handler(func=lambda call: send_help_message_button.callback_data == call.data)
 def write_help_message_handler(call: CallbackQuery):
     bot.send_message(chat_id=call.message.chat.id, text='Опишите проблему в текстовом формате')
     bot.register_next_step_handler(call.message, send_help_message_handler)
