@@ -34,7 +34,7 @@ def get_str_address_by_coords(location: Location) -> str:
     return location.address
 
 
-def get_price_by_coords_and_order_type(location_from: Location, location_to: Location, order_type: string) -> int:
+def get_price_by_coords_and_order_type(location_from: Location, location_to: Location, order_type: str) -> int:
     if order_type == 'car transporter': return 100000
     dist = distance(
         (location_from.latitude, location_from.longitude),
