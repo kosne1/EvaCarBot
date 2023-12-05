@@ -14,9 +14,12 @@ def start(message: Message):
     user = Users().get(telegram_id=message.from_user.id)
     if user is None:
         reply_markup = first_start_keyboard
+        text = ('Привет! Я - EvaCarBot, с моей помощью ты можешь заказать Эвакуатор разных видов или Автовоз '
+                'в другой город! Пожалуйста, пройди простую регистрацию, чтобы пользоваться всеми '
+                'моими возможностями.')
     else:
         order_storage_service.set_state_authorized(message.chat.id, message.from_user.id)
         reply_markup = executor_start_keyboard if user.role.type == 'executor' else customer_start_keyboard
+        text = 'Приветствую!'
 
-    bot.send_message(chat_id=message.chat.id, text='Добро пожаловать!',
-                     reply_markup=reply_markup)
+    bot.send_message(chat_id=message.chat.id, text=text, reply_markup=reply_markup)
