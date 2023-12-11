@@ -35,7 +35,7 @@ def register(call: CallbackQuery):
         def register_fullname(message: Message):
             auth_storage_service.set_fullname(chat_id=message.chat.id, user_id=message.from_user.id,
                                               full_name=message.text)
-            bot.send_message(chat_id=message.chat.id, text='Необходимо поделиться номером телефона',
+            bot.send_message(chat_id=message.chat.id, text='Нажмите кнопку: "Поделиться номером телефона"!',
                              reply_markup=share_contact_keyboard)
 
             def register_contact(message: Message):
