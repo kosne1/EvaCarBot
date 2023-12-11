@@ -28,14 +28,15 @@ class AuthStorageService:
     def set_state_registered(self, chat_id: int, user_id: int) -> bool:
         return self.__storage.set_state(chat_id=chat_id, user_id=user_id, state='authorized')
 
-    def get_create_user_dto(self, chat_id: int, telegram_id: int) -> CreateUserDto:
+    def get_create_user_dto(self, chat_id: int, telegram_id: int, car_list: list[str] = None) -> CreateUserDto:
         data = self.__storage.get_data(chat_id=chat_id, user_id=telegram_id)
         username = data.get('username') if data.get('username') else f"user_{telegram_id}"
         return CreateUserDto(telegram_id=telegram_id,
                              username=username,
                              full_name=data.get('full_name'),
                              phone_number=data.get('phone_number'),
-                             role=data.get('role'))
+                             role=data.get('role'),
+                             car=car_list)
 
     def set_user_auth_id(self, chat_id: int, user_id: int, id: int) -> bool:
         self.__storage.set_state(chat_id=chat_id, user_id=user_id, state='authorized')
