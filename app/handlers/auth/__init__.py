@@ -54,7 +54,7 @@ def register(call: CallbackQuery):
                     bot.send_poll(question='Каким авто вы владеете?', chat_id=message.chat.id,
                                   is_anonymous=False,
                                   allows_multiple_answers=True,
-                                  options=['Платформа', "Сдвижная платформа", "Манипулятор", "Автовоз"],
+                                  options=['Платформа', "Сдвижная платформа", "Манипулятор", "Автовоз", "Другое"],
                                   reply_markup=ReplyKeyboardRemove())
                     return
                 user = Users().create(user_dto)

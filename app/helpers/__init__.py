@@ -91,4 +91,6 @@ def get_car_list(cars: list[int]) -> list[str]:
         answer.append('Манипулятор')
     if 3 in cars:
         answer.append('Автовоз')
+    if 4 in cars:
+        answer.append('Другое')
     return answer
