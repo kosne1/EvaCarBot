@@ -79,3 +79,16 @@ def auto_sending_order(order: OrderDto) -> None:
         if executor.telegram_id == 5504247833:
             bot.send_message(chat_id=executor.telegram_id, text=text,
                              reply_markup=gen_accept_order_keyboard(order_id=order.id))
+
+
+def get_car_list(cars: list[int]) -> list[str]:
+    answer = []
+    if 0 in cars:
+        answer.append('Платформа')
+    if 1 in cars:
+        answer.append('Сдвижная платформа')
+    if 2 in cars:
+        answer.append('Манипулятор')
+    if 3 in cars:
+        answer.append('Автовоз')
+    return answer
