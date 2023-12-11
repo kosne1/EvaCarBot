@@ -27,7 +27,8 @@ class Users(API):
             "telegram_id": user.telegram_id,
             "phone_number": user.phone_number,
             "role": 3 if user.role == "executor" else 4,
-            "confirmed": confirmed
+            "confirmed": confirmed,
+            "car": user.car
         })).json()
 
         if response.get('error', None) is not None:
@@ -40,7 +41,8 @@ class Users(API):
         else:
             log_file = open("info.log", "a")
             log_file.write(
-                f"[INFO {datetime.datetime.now()}]: new user created, strapi id: {UserDto.model_validate(response).id},\n")
+                f"[INFO {datetime.datetime.now()}]: "
+                f"new user created, strapi id: {UserDto.model_validate(response).id},\n")
             log_file.close()
             return UserDto.model_validate(response)
 
