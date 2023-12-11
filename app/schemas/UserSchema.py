@@ -9,6 +9,7 @@ class CreateUserDto(BaseModel):
     full_name: str
     phone_number: str
     role: str
+    car: list[str] | None = None
 
 
 class UserDto(BaseModel):
@@ -20,6 +21,7 @@ class UserDto(BaseModel):
     role: RoleDto
     blocked: bool
     confirmed: bool
+    car: list[str] | None = None
 
 
 class UserAttributesDto(BaseModel):
@@ -29,6 +31,7 @@ class UserAttributesDto(BaseModel):
     telegram_id: int
     blocked: bool
     confirmed: bool
+    car: list[str] | None = None
 
 
 class UserDataDto(BaseModel):
