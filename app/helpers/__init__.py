@@ -76,9 +76,8 @@ def auto_sending_order(order: OrderDto) -> None:
     text = new_order_string + text + "\n\n" + "Успейте найти его в ленте, пока на него никто не откликнулся!"
     executors = Users().get_executors()
     for executor in executors:
-        if executor.telegram_id == 5504247833:
-            bot.send_message(chat_id=executor.telegram_id, text=text,
-                             reply_markup=gen_accept_order_keyboard(order_id=order.id))
+        bot.send_message(chat_id=executor.telegram_id, text=text,
+                         reply_markup=gen_accept_order_keyboard(order_id=order.id))
 
 
 def get_car_list(cars: list[int]) -> list[str]:

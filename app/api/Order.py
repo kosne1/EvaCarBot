@@ -1,7 +1,6 @@
 import json
 
 import requests
-from requests import Response
 
 from app.api.API import API
 from app.schemas.OrderSchema import CreateOrderDto, OrderDto
